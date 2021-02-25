@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import Logo from '../component/logo'
 import Loginform from '../component/loginForm'
 import axios from "axios"
@@ -28,12 +28,16 @@ const submit = (e, formState, setErrMessage, history) =>{
     })
 }
 
-const Login = props => {
-    // useEffect( () => {
-    //      const token = localStorage.getItem('token');
-    //      console.log("Login => token", token);
+const Login = ({history}) => {
+    useEffect(()=> {
+         const token = localStorage.getItem('token');
+         console.log("Login => token", token);
+         
+         if (token){
+            history.push('/home')
+        }
+    },[] );
 
-    // }, [])
     return  (
         <div>
             <Logo/>
