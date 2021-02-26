@@ -9,15 +9,11 @@ const Marvel = (props) => {
     const [heroes, setheroes] = useState([]);
     const [offSet, setOffSet] = useState({number: 0, numPage: 1})
     const decrease = () => {
-        if (offSet.numPage > 1) {
           setOffSet({...offSet, number: offSet.number - 20, numPage: offSet.numPage - 1})
-        }
       }
     
     const increase = () => {
-      if (offSet.numPage < 100) {
         setOffSet({...offSet, number: offSet.number + 20, numPage: offSet.numPage + 1})
-      }
     }
       
     useEffect(() => {
@@ -55,9 +51,11 @@ const Marvel = (props) => {
                 ))}
             </DataContainer>
             <PaginationContainer>
-                <ButtonContainer onClick={decrease}> - </ButtonContainer>
+                {offSet.numPage > 1 ? (<ButtonContainer onClick={decrease}> - </ButtonContainer>) : 
+                ( <div> </div>)}
                 <ParagrapheContainer>{offSet.numPage}</ParagrapheContainer>
-                <ButtonContainer onClick={increase}> + </ButtonContainer>
+                {heroes.length >= 20 ? ( <ButtonContainer onClick={increase}> + </ButtonContainer>) : 
+                ( <div> </div>)}
             </PaginationContainer>
         </div>
     );
