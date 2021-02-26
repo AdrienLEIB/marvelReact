@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import styled from 'styled-components'
-
+import {useHistory} from 'react-router-dom'; 
 
 
 const Marvel = (props) => {
 
     const [heroes, setheroes] = useState([]);
     const [offSet, setOffSet] = useState({number: 0, numPage: 1})
+    const history = useHistory();
     const decrease = () => {
           setOffSet({...offSet, number: offSet.number - 20, numPage: offSet.numPage - 1})
       }
@@ -17,8 +18,6 @@ const Marvel = (props) => {
     }
       
     useEffect(() => {
-        console.log( process.env.REACT_APP_MARVEL_KEYAPI);
-        console.log( process.env.REACT_APP_MARVEL_HASH_KEY);
         axios({
             method: 'get',
             url: "http://gateway.marvel.com/v1/public/characters",
@@ -31,7 +30,6 @@ const Marvel = (props) => {
             }
         })
         .then(res =>{
-            console.log(res.data.data);
             setheroes(res.data.data.results);
             
         }).catch(err => {
@@ -39,13 +37,18 @@ const Marvel = (props) => {
         })
     }, [offSet])
 
+    const redirectToDetail = (id) =>{
+      console.log(id);
+      history.push('/characters/' + id);
+    }
+
     return (
         <div>
             <DataContainer>
                 {heroes.map(heroe => (
                     <ItemContainer key={heroe.name}>
-                    <ImgContainer src={`${heroe.thumbnail.path}.${heroe.thumbnail.extension}`}  alt={heroe.name} />
-                    <ParagrapheContainer>{heroe.name}</ParagrapheContainer>
+                    <ImgContainer src={`${heroe.thumbnail.path}.${heroe.thumbnail.extension}`}  alt={heroe.name} /> <br></br>
+                    <ParagrapheContainer onClick={() => redirectToDetail(heroe.id)}> {heroe.name} </ParagrapheContainer>
                     </ItemContainer>
                     
                 ))}
@@ -88,6 +91,6 @@ const ButtonContainer = styled.button`
   margin: 10px;
 `
 
-const ParagrapheContainer = styled.p``
+const ParagrapheContainer = styled.button``
 
 export default Marvel;

@@ -1,9 +1,9 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Logo from '../component/logo'
 import Loginform from '../component/loginForm'
 import axios from "axios"
 
-const submit = (e, formState, setErrMessage, history) =>{
+const submit = (e, formState, setErrMessage, history, setIsToken) =>{
     e.preventDefault();
     if (!formState.username || !formState.password){
         setErrMessage("Les champs ne doivent pas être vide")
@@ -19,29 +19,29 @@ const submit = (e, formState, setErrMessage, history) =>{
         }
     
     }).then(res =>{
-        console.log(res.headers["x-access-token"])
         localStorage.setItem('token', res.headers["x-access-token"])
-        history.push('/home');
+        setIsToken(res.headers["x-access-token"])
+        history.push('/characters');
     }).catch(err => {
         console.log(err);
         setErrMessage('Une erreur est survunue revenez plus tard');
     })
 }
 
-const Login = ({history}) => {
+const Login = ({setIsToken, history}) => {
     useEffect(()=> {
          const token = localStorage.getItem('token');
          console.log("Login => token", token);
          
          if (token){
-            history.push('/home')
+            history.push('/characters')
         }
     },[] );
 
     return  (
         <div>
             <Logo/>
-            <Loginform submit={submit} />
+            <Loginform submit={submit} setIsToken={setIsToken} />
         </div>
     );
 }

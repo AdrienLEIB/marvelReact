@@ -1,9 +1,8 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from "axios"
 import {useHistory} from 'react-router-dom'; 
 
-const Loginform = ({submit}) => {
+const Loginform = ({submit, setIsToken}) => {
 
     // const [ username, setUsername ] = useState("");
     // const [password, setPassword ] = useState("");
@@ -13,7 +12,7 @@ const Loginform = ({submit}) => {
 
 
     return  (
-        <StyledFrom onSubmit={(e) => submit(e, formState, setErrMessage, history)}>
+        <StyledFrom onSubmit={(e) => submit(e, formState, setErrMessage, history, setIsToken)}>
             <StyledSpan> Formulaire pour devenir un AVENGERS</StyledSpan>
             <SignInput placeholder="username" onChange={e => setFormState({...formState, username:e.target.value})} type="text"></SignInput>
             <SignInput  placeholder="password" onChange={e => setFormState({...formState, password:e.target.value})} type="password"></SignInput>
