@@ -38,7 +38,6 @@ const Marvel = (props) => {
     }, [offSet])
 
     const redirectToDetail = (id) =>{
-      console.log(id);
       history.push('/characters/' + id);
     }
 
@@ -49,6 +48,7 @@ const Marvel = (props) => {
                     <ItemContainer key={heroe.name}>
                     <ImgContainer src={`${heroe.thumbnail.path}.${heroe.thumbnail.extension}`}  alt={heroe.name} /> <br></br>
                     <ParagrapheContainer onClick={() => redirectToDetail(heroe.id)}> {heroe.name} </ParagrapheContainer>
+                    <Star></Star>
                     </ItemContainer>
                     
                 ))}
@@ -92,5 +92,11 @@ const ButtonContainer = styled.button`
 `
 
 const ParagrapheContainer = styled.button``
+
+
+const Star = styled.button`
+  
+`
+ 
 
 export default Marvel;

@@ -13,14 +13,14 @@ import Login from '../screens/login';
 import Characters from '../screens/characters';
 // import Home from '../screens/home';
 import PrivateRoute from '../component/utils/privateRoute'
-import HeaderLogout from '../component/headerLogout'
+import Header from '../component/header'
 import Character from '../screens/character'
 
 const Routes = () => {
     const [isToken, setIsToken] = useState("")
     return(
         <Router>
-            <HeaderLogout isToken={isToken} setIsToken={setIsToken} />
+            <Header isToken={isToken} setIsToken={setIsToken} />
             <Switch>
                 <Route exact path="/" component={props => <Login setIsToken={setIsToken} {...props} /> }/>
                 {/* <PrivateRoute path="/characters" component={Home}/> */}

@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
 const HeaderLogout = ({isToken, setIsToken}) => {
+  useEffect(() => {
+    setIsToken(localStorage.getItem('token'));
+  }, []);
   const history = useHistory()
   // const isToken = localStorage.getItem('token')
 
@@ -53,7 +56,6 @@ const LoginButton = styled.button`
   background-color: #e7e7e7; 
   color: black;
 `
-
 
 const Container = styled.div`
   /* background-color: red; */
