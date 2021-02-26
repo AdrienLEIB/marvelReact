@@ -22,7 +22,7 @@ const Routes = () => {
             <Switch>
                 <Route exact path="/" component={Login}/>
                 <PrivateRoute path="/home" component={Home}/>
-                <Route path="/characters" component={Characters}/>
+                <PrivateRoute path="/characters" component={Characters}/>
                 <Redirect to="/"></Redirect>
             </Switch>
         </Router>

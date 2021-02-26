@@ -23,7 +23,7 @@ const Loginform = ({submit}) => {
     )
 }
 
-const StyledSpan = styled.form`
+const StyledSpan = styled.span`
     margin-top: 12px;
     margin-bottom: 12px;
 `
