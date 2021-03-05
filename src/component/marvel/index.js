@@ -11,6 +11,29 @@ const Marvel = (props) => {
     const [offSet, setOffSet] = useState({number: 0, numPage: 1})
     const history = useHistory();
     const [favorites, setFavorites] = useState(localStorage.getItem('favorites') ? JSON.parse(localStorage.getItem('favorites')) : [] );
+    const [isLoading, setLoading] = useState(true);
+
+    const getHeroes = () =>{
+      axios({
+        method: 'get',
+        url: "http://gateway.marvel.com/v1/public/characters",
+        params: {
+        'ts': 1,
+        'apikey': process.env.REACT_APP_MARVEL_KEYAPI,
+        'hash': process.env.REACT_APP_MARVEL_HASH_KEY,
+        'limit': 20,
+        'offset': offSet.number
+        }
+      })
+      .then(res =>{
+          setheroes(res.data.data.results);
+          setLoading(false);
+          
+      }).catch(err => {
+          console.log(err);
+          setLoading(false);
+      })
+    }
 
     useEffect(()=>{
       localStorage.setItem('favorites', JSON.stringify(favorites));
@@ -21,10 +44,12 @@ const Marvel = (props) => {
       const checkId = favorites.filter(e => e.id === heroe.id)
       if (checkId.length === 0) {
         setFavorites([...favorites, {'id': heroe.id, 'path': heroe.thumbnail.path, 'extension': heroe.thumbnail.extension, 'name': heroe.name }]);
+        
       }
       else{
         const newFavorites = favorites.filter(h => h.id !=  heroe.id);
         setFavorites(newFavorites);
+        
       }
     }
 
@@ -37,35 +62,47 @@ const Marvel = (props) => {
     }
       
     useEffect(() => {
-        axios({
-            method: 'get',
-            url: "http://gateway.marvel.com/v1/public/characters",
-            params: {
-            'ts': 1,
-            'apikey': process.env.REACT_APP_MARVEL_KEYAPI,
-            'hash': process.env.REACT_APP_MARVEL_HASH_KEY,
-            'limit': 20,
-            'offset': offSet.number
-            }
-        })
-        .then(res =>{
-            setheroes(res.data.data.results);
-            
-        }).catch(err => {
-            console.log(err);
-        })
-        
+        getHeroes();   
     }, [offSet])
 
     const redirectToDetail = (id) =>{
       history.push('/characters/' + id);
     }
 
+    if (isLoading){
+      return(<Chargement>Chargement en cours ...</Chargement>)
+    }
     return (
-        <BaliseMarvel heroes={heroes} favorites={favorites} history={history} redirectToDetail={redirectToDetail} addFav={addFav} offSet={offSet} decrease={decrease} increase={increase} />
+        <>
+        {heroes[0] ? 
+          <BaliseMarvel heroes={heroes} favorites={favorites} history={history} redirectToDetail={redirectToDetail} addFav={addFav} offSet={offSet} decrease={decrease} increase={increase} />
+         : 
+          <NoHeroes> 
+            <PNoHeroes>L'appel api n'a pas fonctionné. </PNoHeroes>
+            <ButtonNoHeroe onClick={getHeroes}> Retry </ButtonNoHeroe>
+          </NoHeroes>
+        }
+        </>
     );
 };
 
+const PNoHeroes = styled.p`
+text-align: center;
+margin: 10px
+`
+const ButtonNoHeroe = styled.button`
 
+
+`
+const NoHeroes = styled.div`
+  text-align: center;
+  margin: 10px
+  `
+
+const Chargement = styled.p`
+  font-size: 20px;
+  text-align: center;
+  margin: 10px
+`
 
 export default Marvel;
