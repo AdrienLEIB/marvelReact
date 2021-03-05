@@ -21,22 +21,24 @@ const HeaderLogout = ({isToken, setIsToken}) => {
   const redirectToCharacters = () => {
     history.push('/characters');
   }
-  console.log(isToken);
+
+  const redirectToFavorites = () => {
+    history.push('/favorites')
+  }
+
   return (
     <Container>
       {isToken ? (
-        <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+        <>
+          <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+          <CharactersButton onClick={redirectToCharacters}> Characters </CharactersButton>
+          <Favorites onClick={redirectToFavorites}> Favorites </Favorites>
+        </>
+       
         
       ) : (
         <LoginButton onClick={handleLogin}>Login</LoginButton>
       )}
-      {isToken ? (
-        <CharactersButton onClick={redirectToCharacters}> Characters </CharactersButton>
-        
-      ) : (
-        <div> </div>
-      )}
-      
     </Container>
   )
 }
@@ -59,6 +61,11 @@ const LoginButton = styled.button`
 
 const Container = styled.div`
   /* background-color: red; */
+`
+const Favorites = styled.button`
+  padding: 6px;
+  background-color: #D53D25; 
+  color: white;
 `
 
 export default HeaderLogout;

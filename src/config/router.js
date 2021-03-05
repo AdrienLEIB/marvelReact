@@ -12,9 +12,10 @@ import {
 import Login from '../screens/login';
 import Characters from '../screens/characters';
 // import Home from '../screens/home';
-import PrivateRoute from '../component/utils/privateRoute'
-import Header from '../component/header'
-import Character from '../screens/character'
+import PrivateRoute from '../component/utils/privateRoute';
+import Header from '../component/header';
+import Character from '../screens/character';
+import Favorites from '../component/favorites';
 
 const Routes = () => {
     const [isToken, setIsToken] = useState("")
@@ -26,6 +27,7 @@ const Routes = () => {
                 {/* <PrivateRoute path="/characters" component={Home}/> */}
                 <PrivateRoute exact path="/characters" component={Characters}/>
                 <PrivateRoute  path="/characters/:id" component={Character}/>
+                <PrivateRoute path='/favorites' component={Favorites} />
                 <Redirect to="/"></Redirect>
             </Switch>
         </Router>
