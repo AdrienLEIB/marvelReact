@@ -2,11 +2,10 @@ import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import styled from 'styled-components'
 import {useHistory} from 'react-router-dom'; 
-import {  AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import BaliseMarvel from '../baliseMarvel'
 
-const Marvel = (props) => {
-
+const Recherche =  ({name}) => {
+    console.log(name);
     const [heroes, setheroes] = useState([]);
     const [offSet, setOffSet] = useState({number: 0, numPage: 1})
     const history = useHistory();
@@ -37,15 +36,19 @@ const Marvel = (props) => {
     }
       
     useEffect(() => {
+        console.log(name);
         axios({
             method: 'get',
             url: "http://gateway.marvel.com/v1/public/characters",
             params: {
+            
             'ts': 1,
+            'nameStartsWith': name,
             'apikey': process.env.REACT_APP_MARVEL_KEYAPI,
             'hash': process.env.REACT_APP_MARVEL_HASH_KEY,
             'limit': 20,
-            'offset': offSet.number
+            'offset': offSet.number,
+            
             }
         })
         .then(res =>{
@@ -68,4 +71,4 @@ const Marvel = (props) => {
 
 
 
-export default Marvel;
+export default Recherche;

@@ -16,6 +16,7 @@ import PrivateRoute from '../component/utils/privateRoute';
 import Header from '../component/header';
 import Character from '../screens/character';
 import Favorites from '../component/favorites';
+import GlobalRecherche from '../screens/globalrecherche';
 
 const Routes = () => {
     const [isToken, setIsToken] = useState("")
@@ -28,6 +29,7 @@ const Routes = () => {
                 <PrivateRoute exact path="/characters" component={Characters}/>
                 <PrivateRoute  path="/characters/:id" component={Character}/>
                 <PrivateRoute path='/favorites' component={Favorites} />
+                <PrivateRoute path='/search=:name' component={GlobalRecherche} />
                 <Redirect to="/"></Redirect>
             </Switch>
         </Router>
